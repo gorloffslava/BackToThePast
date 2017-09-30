@@ -26,6 +26,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func notePressed(_ sender: UIButton) {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
+        } catch let error as NSError {
+            print(error.description)
+        }
+        
         let soundURL = Bundle.main.url(forResource: "note_" + self.soundArray[sender.tag].lowercased(), withExtension: "wav")
         do {
             self.audioPlayer = try AVAudioPlayer(contentsOf: soundURL!)
